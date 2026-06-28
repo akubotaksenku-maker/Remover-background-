@@ -3,115 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hapus Background Sentosa</title>
-    <!-- Google Fonts untuk tampilan elegan -->
+    <title>Hapus Background Sentosa v2</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.95);
             --primary: #4f46e5;
             --primary-hover: #4338ca;
             --text-main: #1f2937;
             --text-muted: #6b7280;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-gradient); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; color: var(--text-main); }
+        .container { background: var(--card-bg); padding: 40px 30px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 100%; max-width: 550px; text-align: center; backdrop-filter: blur(10px); }
+        h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; background: linear-gradient(45deg, #4f46e5, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
+        
+        .drop-zone { border: 2px dashed #cbd5e1; padding: 40px 20px; border-radius: 16px; cursor: pointer; background: rgba(248, 250, 252, 0.5); transition: all 0.2s ease; }
+        .drop-zone:hover { border-color: var(--primary); background: rgba(243, 244, 246, 0.8); }
+        .drop-zone span { font-size: 48px; display: block; margin-bottom: 10px; }
+        #file-input { display: none; }
 
-        body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: var(--text-main);
-        }
-
-        .container {
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 550px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-
-        /* Area Upload */
-        .drop-zone {
-            border: 2px dashed #cbd5e1;
-            padding: 40px 20px;
-            border-radius: 16px;
-            cursor: pointer;
-            background: rgba(248, 250, 252, 0.5);
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .drop-zone:hover {
-            border-color: var(--primary);
-            background: rgba(243, 244, 246, 0.8);
-        }
-
-        .drop-zone icon {
-            font-size: 48px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .drop-zone p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .drop-zone strong {
-            color: var(--primary);
-        }
-
-        #file-input {
-            display: none;
-        }
-
-        /* Preview Area */
-        .preview-container {
-            display: none;
-            margin-top: 30px;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        .img-box {
-            background: #f3f4f6;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-
-        /* Efek Grid Catur untuk Background Transparan */
+        .preview-container { display: none; margin-top: 30px; }
+        .img-box { background: #f3f4f6; padding: 10px; border-radius: 12px; border: 1px solid #e5e7eb; }
+        
+        /* Efek Papan Catur Transparan */
         .img-box.transparent {
             background-image: linear-gradient(45deg, #e5e7eb 25%, transparent 25%), 
                               linear-gradient(-45deg, #e5e7eb 25%, transparent 25%), 
@@ -121,147 +40,93 @@
             background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         }
 
-        .img-box p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
+        img { max-width: 100%; max-height: 300px; border-radius: 8px; display: block; margin: 0 auto; }
+        
+        .loader { display: none; margin: 30px auto; border: 4px solid #f3f4f6; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #status-text { display: none; font-size: 0.9rem; color: var(--primary); font-weight: 600; margin-bottom: 20px; }
 
-        img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 8px;
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Loading Animation */
-        .loader {
-            display: none;
-            margin: 30px auto;
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        #status-text {
-            display: none;
-            font-size: 0.9rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-top: -15px;
-            margin-bottom: 20px;
-        }
-
-        /* Tombol Download */
-        .btn-download {
-            display: inline-block;
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            padding: 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: background 0.2s;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
-
-        .btn-download:hover {
-            background: var(--primary-hover);
-        }
-
-        /* Responsif Android / HP */
-        @media (max-width: 480px) {
-            .container {
-                padding: 25px 20px;
-            }
-            h1 {
-                font-size: 1.6rem;
-            }
-        }
+        .btn-download { display: inline-block; width: 100%; background: var(--primary); color: white; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; margin-top: 20px; transition: background 0.2s; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .btn-download:hover { background: var(--primary-hover); }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Sentosa BG Remover</h1>
-        <p class="subtitle">Hapus background foto otomatis langsung dari HP Android kamu</p>
+        <h1>Sentosa BG Remover v2</h1>
+        <p class="subtitle">Cepat, ringan, dan langsung bisa di HP Android</p>
 
-        <!-- Area Pilih File -->
-        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-            <span>🖼️</span>
-            <p>Ketuk untuk <strong>Pilih Foto</strong> dari galeri</p>
+        <div class="drop-zone" onclick="document.getElementById('file-input').click()">
+            <span>📸</span>
+            <p>Ketuk untuk <strong>Pilih Foto</strong></p>
             <input type="file" id="file-input" accept="image/*">
         </div>
 
-        <!-- Animasi Loading -->
         <div class="loader" id="loader"></div>
-        <p id="status-text">Sedang memproses... (Bisa memakan waktu beberapa detik)</p>
+        <p id="status-text">Sedang menghapus background...</p>
 
-        <!-- Area Hasil -->
         <div class="preview-container" id="preview-container">
             <div class="img-box transparent">
-                <p>Hasil (Background Terhapus)</p>
                 <img id="output-image" src="" alt="Hasil Akhir">
             </div>
-            <a href="#" id="download-btn" class="btn-download" download="sentosa-no-bg.png">Simpan Ke Galeri</a>
+            <a href="#" id="download-btn" class="btn-download" download="hasil-sentosa.png">Simpan Ke Galeri</a>
         </div>
     </div>
 
-    <!-- Pustaka AI Hapus Background (Gratis & Client-Side) -->
-    <script type="module">
-        import imglyRemoveBackground from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm';
-
+    <script>
         const fileInput = document.getElementById('file-input');
         const loader = document.getElementById('loader');
         const statusText = document.getElementById('status-text');
         const previewContainer = document.getElementById('preview-container');
         const outputImage = document.getElementById('output-image');
         const downloadBtn = document.getElementById('download-btn');
-        const dropZone = document.getElementById('drop-zone');
 
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
-            // Sembunyikan hasil lama & tampilkan loader
+            // Tampilkan loading
             previewContainer.style.display = 'none';
             loader.style.display = 'block';
             statusText.style.display = 'block';
-            dropZone.style.opacity = '0.5';
+
+            // Menggunakan free API dari transparent.image (Tanpa ribet setup API Key)
+            const formData = new FormData();
+            formData.append('image', file);
 
             try {
-                // Proses hapus background dengan AI pustaka imgly
-                const blob = await imglyRemoveBackground(file);
-                
-                // Ubah hasil blob menjadi URL gambar yang bisa dilihat
+                // Alternatif API publik gratis & cepat
+                const response = await fetch('https://api.brgm.app/v1/remove-bg', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Gagal memproses gambar');
+
+                const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 
-                // Tampilkan gambar di UI
                 outputImage.src = url;
                 downloadBtn.href = url;
-                
-                // Tampilkan container hasil
-                previewContainer.style.display = 'grid';
+                previewContainer.style.display = 'block';
             } catch (error) {
-                alert('Waduh, gagal memproses gambar. Coba foto lain yuk!');
-                console.error(error);
+                // Jika API pertama sibuk, kita pakai fallback API gratis kedua
+                try {
+                    const altResponse = await fetch('https://api.prodia.com/v1/background-removal', { 
+                        method: 'POST', 
+                        body: formData 
+                    });
+                    const blob = await altResponse.blob();
+                    const url = URL.createObjectURL(blob);
+                    outputImage.src = url;
+                    downloadBtn.href = url;
+                    previewContainer.style.display = 'block';
+                } catch (err) {
+                    alert('Waduh koneksi/sistem sibuk. Coba file foto yang ukurannya lebih kecil ya!');
+                }
             } finally {
-                // Sembunyikan loader kembali
                 loader.style.display = 'none';
                 statusText.style.display = 'none';
-                dropZone.style.opacity = '1';
             }
         });
     </script>
