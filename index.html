@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentosa Premium BG Remover</title>
+    <title>Sentosa AI BG Remover</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Load Google MediaPipe Secara Aman -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+
     <style>
         :root {
             --bg: #09090b;
@@ -58,7 +61,7 @@
         .upload-box {
             border: 2px dashed #3f3f46;
             background: #202023;
-            padding: 36px 16px;
+            padding: 40px 16px;
             border-radius: 16px;
             cursor: pointer;
             text-align: center;
